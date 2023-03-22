@@ -1,15 +1,46 @@
-/*
+//Game project final submission
 
-- Copy your game project code into this file
-- for the p5.Sound library look here https://p5js.org/reference/#/libraries/p5.sound
-- for finding cool sounds perhaps look here
-https://freesound.org/
+//fix the bug that the game character can stand on canyons after jump.
 
-
-*/
-
-
-//Game project pt 8
+//https://www.youtube.com/watch?v=rLl9XBg7wSs
+//https://github.com/linuk/Mario.Run
+//TODO: complete the game functionality
+//TODO: destructure the code
+//TODO: add sounds
+//TODO: fix the screen size
+//TODO: add a score board
+//TODO: add auto levels
+//TODO: add more enemies
+//TODO: add level wise sounds
+//TODO: add more collectable items
+//TODO: add more platforms
+//TODO: add more canyons
+//TODO: add background (bioshock infinite)
+//TODO: edit HD textures
+//TODO: edit character animations
+//TODO: add super power collectable items
+//TODO: add barriers
+//TODO: add weather effects
+//TODO: add trophy and a palace at the end of the game
+//TODO: add a story
+//TODO: add a boss
+//TODO: make a start game screen
+//TODO: make a game over screen
+//TODO: make a game won screen
+//TODO: make a game restart button
+//TODO: make a game pause button
+//TODO: highest score counter
+//TODO: add css
+//TODO: add a game ui
+//TODO: add underground levels
+//TODO: add air levels
+//TODO: add water levels
+//TODO: add desert & forest levels
+//TODO: add snow levels
+//TODO: add ending
+//TODO: add opening trailer
+//TODO: add a game screenshot
+//TODO: deploy the game
 
 // Global variables
 var gameChar_x;
