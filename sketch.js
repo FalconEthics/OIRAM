@@ -1,9 +1,15 @@
 //Game project final submission
 
-//fix the bug that the game character can stand on canyons after jump.
-
 //https://www.youtube.com/watch?v=rLl9XBg7wSs
 //https://github.com/linuk/Mario.Run
+
+//https://ian-albert.com/games/super_mario_bros_maps/mario-1-1.gif
+// https://ian-albert.com/games/super_mario_bros_maps/mario-1-2.gif
+// https://ian-albert.com/games/super_mario_bros_maps/mario-1-3.gif
+// https://ian-albert.com/games/super_mario_bros_maps/mario-1-4.gif
+// https://ian-albert.com/games/super_mario_bros_maps/mario-2-2.gif
+// https://ian-albert.com/games/super_mario_bros_maps/mario-4-4.gif
+
 //TODO: complete the game functionality
 //TODO: destructure the code
 //TODO: add sounds
@@ -86,7 +92,6 @@ function setup() {
 
 function draw() {
     ///////////DRAWING CODE//////////
-    console.log(isFalling);
 
     //to control the camera
     if (isLeft == true && isPlummeting == false) {
@@ -315,23 +320,20 @@ function keyPressed() {
     // A to turn left
     if ((keyCode == 65 || key == 'a' || keyCode == 37) && isPlummeting == false) {
         isLeft = true;
-        console.log("keyPressed: " + key);
-        console.log("keyPressed: " + keyCode);
+        console.log("character is moving left");
     }
 
     // D to turn right
     if ((keyCode == 68 || key == 'd' || keyCode == 39) && isPlummeting == false) {
         isRight = true;
-        console.log("keyPressed: " + key);
-        console.log("keyPressed: " + keyCode);
+        console.log("character is moving right");
     }
 
     // W to jump
     if ((keyCode == 87 || key == 'w' || keyCode == 38) && isFalling == false && isPlummeting == false) {
         jumpSound.play();
         gameChar_y -= 120;
-        console.log("keyPressed: " + key);
-        console.log("keyPressed: " + keyCode);
+        console.log("character is jumping");
     }
 }
 
@@ -339,17 +341,13 @@ function keyReleased() {
     // if statements to control the animation of the character when
     // keys are released.
     // to stop moving left
-    if (keyCode == 65) {
+    if (keyCode == 65 || key == 'a' || keyCode == 37) {
         isLeft = false;
-        console.log("keyPressed: " + key);
-        console.log("keyPressed: " + keyCode);
     }
 
     // to stop moving right
-    if (keyCode == 68) {
+    if (keyCode == 68 || key == 'd' || keyCode == 39) {
         isRight = false;
-        console.log("keyPressed: " + key);
-        console.log("keyPressed: " + keyCode);
     }
 }
 
@@ -501,9 +499,9 @@ function checkCanyon(t_canyon) {
     //this function checks if the character has reached the canyon
     for (let i = 0; i < t_canyon.length; i++) {
         if (
-            gameChar_x > t_canyon[i].x_pos &&
-            gameChar_x < t_canyon[i].x_pos + t_canyon[i].width - 10 &&
-            gameChar_y == floorPos_y
+            gameChar_x > t_canyon[i].x_pos + 8 &&
+            gameChar_x < t_canyon[i].x_pos + t_canyon[i].width - 8 &&
+            (floorPos_y - gameChar_y) < 5
         ) {
             isPlummeting = true;
             console.log("character reached canyon");
@@ -588,7 +586,7 @@ function drawLives() {
 function startGame() {
     //this function resets the game
     //initialise the variables
-    gameChar_x = width / 2;
+    gameChar_x = (width / 2) - 300;
     gameChar_y = floorPos_y;
     isLeft = false;
     isRight = false;
@@ -596,20 +594,18 @@ function startGame() {
     isPlummeting = false;
     //change the below values to change the collectable items spawn position
     collectables = [
-        { x_pos: 10, y_pos: floorPos_y, size: 50, isFound: false },
-        { x_pos: 300, y_pos: floorPos_y, size: 50, isFound: false },
-        { x_pos: 850, y_pos: floorPos_y, size: 50, isFound: false },
-        { x_pos: 1000, y_pos: floorPos_y, size: 50, isFound: false },
+        { x_pos: 420, y_pos: floorPos_y, size: 50, isFound: false },
+        { x_pos: 660, y_pos: floorPos_y - 100, size: 50, isFound: false },
+
     ];
     //change the below values to change the canyon spawn position
     canyons = [
-        { x_pos: 220, width: 70 },
-        { x_pos: 690, width: 90 },
-        { x_pos: 900, width: 50 },
+        { x_pos: 320, width: 70 },
+        
     ];
     //platforms the character can stand on
     platforms = [];
-    platforms.push(createPlatforms(10, floorPos_y - 100, 200));
+    platforms.push(createPlatforms(500, floorPos_y - 100, 200));
     //change the below values to change the tree spawn position
     trees_x = [60, 260, 500, 630, 700, 900, 1000];
     treePos_y = floorPos_y - 144;
