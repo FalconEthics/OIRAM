@@ -11,7 +11,7 @@
 // https://ian-albert.com/games/super_mario_bros_maps/mario-4-4.gif
 
 //TODO: add sounds
-//TODO: fix the screen size
+//fix the screen size
 //TODO: add a score board
 //TODO: add auto levels
 //TODO: add more enemies
@@ -34,8 +34,8 @@
 //TODO: make a game restart button
 //TODO: make a game pause button
 //TODO: highest score counter
-//TODO: add css
-//TODO: add a game ui
+//add css
+//add a game ui
 //TODO: add underground levels
 //TODO: add air levels
 //TODO: add water levels
@@ -77,15 +77,82 @@ var game_score;
 let superJump;
 
 var jumpSound;
+var collectSound;
+var deathSound;
+var winSound;
+var superJumpSound;
+var enemySound;
+var powerupSound;
+var stageClearSound;
+var gameOverSound;
+var backgroundSound;
 
 
 //loading assets
 function preload() {
+
+    //load your images here
+    //sky
+    sky = loadImage('assets/sky.jpg');
+    //floor
+    soil = loadImage('assets/floorGrass.png');
+    //clouds
+    cloud1 = loadImage('assets/cloud1.png');
+    cloud2 = loadImage('assets/cloud2.png');
+    cloud3 = loadImage('assets/cloud3.png');
+    cloud4 = loadImage('assets/cloud4.png');
+    //mountains
+    mountains = loadImage('assets/hills1.png');
+
+    //trees
+    tree1 = loadImage('assets/tree1.png');
+    tree3 = loadImage('assets/tree3.png');
+    tree4 = loadImage('assets/tree4.png');
+
+    //canyons
+    canyon1 = loadImage('assets/canyon1.png');
+    canyon2 = loadImage('assets/canyon2.png');
+
     soundFormats('mp3', 'wav');
 
     //load your sounds here
     jumpSound = loadSound('assets/jump.wav');
-    jumpSound.setVolume(0.1);
+    jumpSound.setVolume(1.0);
+
+    collectSound = loadSound('assets/collect.wav');
+    collectSound.setVolume(1.0);
+
+    deathSound = loadSound('assets/death.wav');
+    deathSound.setVolume(1.0);
+
+    superJumpSound = loadSound('assets/superJump.wav');
+    superJumpSound.setVolume(1.0);
+
+    enemySound = loadSound('assets/enemy.wav');
+    enemySound.setVolume(1.0);
+
+    powerupSound = loadSound('assets/powerup.wav');
+    powerupSound.setVolume(1.0);
+
+    stageClearSound = loadSound('assets/stageClear.wav');
+    stageClearSound.setVolume(1.0);
+
+    gameOverSound = loadSound('assets/gameOver.wav');
+    gameOverSound.setVolume(1.0);
+
+    backgroundSound = loadSound('assets/bgm.mp3');
+    backgroundSound.setVolume(0.5);
+
+    flagpoleSound = loadSound('assets/flagpole.wav');
+    flagpoleSound.setVolume(1.0);
+
+
+    firecrackerSound = loadSound('assets/firecracker.wav');
+    firecrackerSound.setVolume(0.5);
+
+    winSound = loadSound('assets/win.wav');
+    winSound.setVolume(1.0);
+
 }
 
 
@@ -103,6 +170,9 @@ function setup() {
 }
 
 function startGame() {
+
+    //playBgm
+    playBgm();
 
     //initialise the variables
     gameChar_x = (width / 2) - 300;
@@ -129,7 +199,8 @@ function startGame() {
 
     //change the below values to change the canyon spawn position
     canyons = [
-        { x_pos: 320, width: 70 },
+        { x_pos: 320, width: 70, type: 1 },
+        { x_pos: 900, width: 70, type: 2 }
 
     ];
 
@@ -138,23 +209,17 @@ function startGame() {
     platforms.push(createPlatforms(500, floorPos_y - 100, 200));
 
     //change the below values to change the tree spawn position
-    trees_x = [60, 260, 500, 630, 700, 900, 1000];
+    trees_x = [60, 260, 500, 630, 800, 940, 1020, 1190, 1350, 1410];
+    trees_x2 = [1510, 1660, 1710, 1890, 1980, 2020, 2300]
     treePos_y = floorPos_y - 144;
 
-    //change the below values to change the mountain spawn position
-    mountain = [
-        { x_pos: -80, y_pos: 400 },
-        { x_pos: 200, y_pos: 400 },
-        { x_pos: 600, y_pos: 400 },
-        { x_pos: 1000, y_pos: 400 },
-    ];
 
     //change the below values to change the cloud spawn position
     clouds = [
-        { x_pos: 150, y_pos: 150, size: 50 },
-        { x_pos: 400, y_pos: 100, size: 50 },
-        { x_pos: 600, y_pos: 200, size: 50 },
-        { x_pos: 890, y_pos: 150, size: 50 },
+        { x_pos: 80, y_pos: 80 },
+        { x_pos: 300, y_pos: 180 },
+        { x_pos: 500, y_pos: 90 },
+        { x_pos: 760, y_pos: 150 },
     ];
 
     cameraPosX = 0;
@@ -174,6 +239,12 @@ function startGame() {
 
 }
 
+//this function plays the background music
+function playBgm() {
+    backgroundSound.play();
+    backgroundSound.loop();
+}
+
 //draw frames
 function draw() {
     ///////////DRAWING CODE//////////
@@ -185,11 +256,8 @@ function draw() {
         cameraPosX += 4;
     }
 
-    background(100, 155, 255); //fill the sky blue
-
-    noStroke();
-    fill(0, 155, 0);
-    rect(0, floorPos_y, width, height - floorPos_y); //draw some green ground
+    //fill the sky blue
+    background(sky);
 
     //start the camera
     push();
@@ -203,6 +271,12 @@ function draw() {
 
     //trees
     drawTrees();
+
+    //draw some green ground
+    image(soil, 0, 0, width, height)
+    image(soil, width, 0, width, height)
+    image(soil, width * 2, 0, width, height)
+    image(soil, width * 3, 0, width, height)
 
     //canyon
     checkCanyon(canyons);
@@ -357,6 +431,8 @@ function draw() {
         if (isContact) {
             if (lives > 0) {
                 lives -= 1;
+                backgroundSound.stop();
+                enemySound.play();
                 startGame();
                 break;
             } else {
@@ -382,22 +458,22 @@ function draw() {
     }
 
     //make the character jump
-    if (gameChar_y < floorPos_y && isPlummeting == false) {
-        var isContact = false;
-        for (var i = 0; i < platforms.length; i++) {
-            if (platforms[i].checkContact(gameChar_x, gameChar_y) == true) {
-                isContact = true;
-                isFalling = false;
-                break;
-            }
-        }
-        if (isContact == false) {
-            gameChar_y += jumpSpeed;
-            isFalling = true;
-        }
-    } else {
-        isFalling = false;
-    }
+    // if (gameChar_y < floorPos_y && isPlummeting == false) {
+    //     var isContact = false;
+    //     for (var i = 0; i < platforms.length; i++) {
+    //         if (platforms[i].checkContact(gameChar_x, gameChar_y) == true) {
+    //             isContact = true;
+    //             isFalling = false;
+    //             break;
+    //         }
+    //     }
+    //     if (isContact == false) {
+    //         gameChar_y += jumpSpeed;
+    //         isFalling = true;
+    //     }
+    // } else {
+    //     isFalling = false;
+    // }
 
     //score
     fill(255);
@@ -433,9 +509,19 @@ function keyPressed() {
 
     // W to jump
     if ((keyCode == 87 || key == 'w' || keyCode == 38) && isFalling == false && isPlummeting == false) {
-        jumpSound.play();
+        if (superJump == "Inactive") {
+            jumpSound.play();
+        }
+        else if (superJump == "Active") {
+            superJumpSound.play();
+        }
         gameChar_y -= jumpHeight;
         console.log("character is jumping");
+    }
+
+    //for developer to test the game
+    if (keyCode == 33) {
+        gameChar_y = 10;
     }
 }
 
@@ -458,76 +544,25 @@ function keyReleased() {
 function drawMountains() {
 
     //this function draws the mountains
-    for (var i = 0; i < mountain.length; i++) {
-        fill(100, 49, 4);
-        triangle(
-            mountain[i].x_pos + 13,
-            mountain[i].y_pos + 33,
-            mountain[i].x_pos + 130,
-            mountain[i].y_pos - 93.6,
-            mountain[i].x_pos + 260,
-            mountain[i].y_pos + 32
-        );
-        fill(255);
-        triangle(
-            mountain[i].x_pos + 79.3,
-            mountain[i].y_pos - 39,
-            mountain[i].x_pos + 130,
-            mountain[i].y_pos - 93.6,
-            mountain[i].x_pos + 187.2,
-            mountain[i].y_pos - 40
-        );
-        //pt2
-        fill(120, 49, 4);
-        triangle(
-            mountain[i].x_pos + 70,
-            mountain[i].y_pos + 32,
-            mountain[i].x_pos + 200,
-            mountain[i].y_pos - 144,
-            mountain[i].x_pos + 400,
-            mountain[i].y_pos + 32
-        );
-        fill(255);
-        triangle(
-            mountain[i].x_pos + 142,
-            mountain[i].y_pos - 68,
-            mountain[i].x_pos + 200,
-            mountain[i].y_pos - 144,
-            mountain[i].x_pos + 288,
-            mountain[i].y_pos - 68
-        );
-    }
+    image(mountains, 0, 0);
+    image(mountains, width, 0);
+    image(mountains, width * 2, 0);
+    image(mountains, width * 3, 0);
+    image(mountains, width * 4, 0);
+    image(mountains, width * 5, 0);
+    image(mountains, width * 6, 0);
+    image(mountains, width * 7, 0);
 }
 
 function drawClouds() {
 
     //this function draws the clouds
     for (var i = 0; i < clouds.length; i++) {
-        fill(255);
-        ellipse(
-            clouds[i].x_pos,
-            clouds[i].y_pos,
-            clouds[i].size + 150,
-            clouds[i].size + 10
-        );
-        ellipse(
-            clouds[i].x_pos + 10,
-            clouds[i].y_pos - 4,
-            clouds[i].size + 30,
-            clouds[i].size + 50
-        );
-        ellipse(
-            clouds[i].x_pos - 30,
-            clouds[i].y_pos - 4,
-            clouds[i].size + 10,
-            clouds[i].size + 30
-        );
-        ellipse(
-            clouds[i].x_pos + 40,
-            clouds[i].y_pos - 20,
-            clouds[i].size,
-            clouds[i].size
-        );
+
+        image(cloud1, clouds[i].x_pos, clouds[i].y_pos);
+        image(cloud2, clouds[i].x_pos + 10, clouds[i].y_pos - 4);
+        image(cloud3, clouds[i].x_pos - 30, clouds[i].y_pos - 4);
+        image(cloud4, clouds[i].x_pos + 40, clouds[i].y_pos - 20);
     }
 }
 
@@ -535,30 +570,19 @@ function drawTrees() {
 
     //this function draws the trees
     for (var i = 0; i < trees_x.length; i++) {
-        fill(0, 100 + [i] * 10, 0);
-        triangle(
-            trees_x[i] - 48,
-            treePos_y - 72,
-            trees_x[i] + 28,
-            treePos_y - 270,
-            trees_x[i] + 112,
-            treePos_y - 72
-        );
-        triangle(
-            trees_x[i] - 48,
-            treePos_y + 8,
-            trees_x[i] + 28,
-            treePos_y - 128,
-            trees_x[i] + 112,
-            treePos_y + 8
-        );
-        fill(62, 20 + [i] * 10, 4);
-        rect(trees_x[i] + 4, treePos_y + 8, 50, 136);
+        image(tree3, trees_x[i], treePos_y - 100);
+        image(tree4, trees_x[i] - 200, treePos_y - 100);
+    }
+
+    for (var i = 0; i < trees_x2.length; i++) {
+
+        image(tree1, trees_x2[i], treePos_y - 25);
     }
 }
 
+
 function checkCollectable(t_collectable) {
-    
+
     //this function checks if the character has reached the collectable item
     if (
         dist(
@@ -570,6 +594,7 @@ function checkCollectable(t_collectable) {
     ) {
         t_collectable.isFound = true;
         game_score += 1;
+        collectSound.play();
         console.log("collectable item found");
     }
 }
@@ -617,6 +642,7 @@ function checkSuperCollectable(t_superCollectable) {
         jumpHeight = 175;
         jumpSpeed = 2.9;
         superJump = "Active";
+        powerupSound.play();
         setTimeout(function () {
             jumpHeight = 120;
             jumpSpeed = 3.5;
@@ -676,24 +702,12 @@ function drawCanyons(t_canyon) {
         if (isPlummeting == true) {
             gameChar_y += 4;
         }
-        fill(52, 158, 235);
-        rect(t_canyon[i].x_pos, 432, t_canyon[i].width, 150);
-        stroke(255);
-        strokeWeight(1);
-        line(
-            t_canyon[i].x_pos + (10 / t_canyon[i].width) * 100,
-            474,
-            t_canyon[i].x_pos + (10 / t_canyon[i].width) * 100,
-            550
-        );
-        line(
-            t_canyon[i].x_pos + (24 / t_canyon[i].width) * 100,
-            494,
-            t_canyon[i].x_pos + (24 / t_canyon[i].width) * 100,
-            570
-        );
-        stroke(0);
-        strokeWeight(0);
+        if (t_canyon[i].type == 1) {
+            image(canyon2, t_canyon[i].x_pos, 422, t_canyon[i].width, 156)
+        }
+        else if (t_canyon[i].type == 2) {
+            image(canyon1, t_canyon[i].x_pos, 422, t_canyon[i].width, 156)
+        }
     }
 }
 
@@ -719,10 +733,10 @@ function renderFlagpole() {
 
 function checkFlagpole() {
     //this function checks if the character has reached the flagpole
-    var d = abs(gameChar_x - flagpole.x_pos);
-    if (d < 15) {
-        flagpole.isReached = true;
-    }
+    // var d = abs(gameChar_x - flagpole.x_pos);
+    // if (d < 15) {
+    //     flagpole.isReached = true;
+    // }
 }
 
 function checkPlayerDie() {
@@ -732,6 +746,8 @@ function checkPlayerDie() {
     }
     else if (gameChar_y > height) {
         lives -= 1;
+        backgroundSound.stop();
+        deathSound.play();
         startGame();
     }
 }
@@ -745,6 +761,8 @@ function drawLives() {
 }
 
 function gameWon() {
+    backgroundSound.stop();
+    stageClearSound.play();
     //this function checks if the character has won the game
     fill(0);
     textSize(30);
@@ -754,10 +772,19 @@ function gameWon() {
 
 function gameOver() {
     //this function checks if the character has lost the game
+    backgroundSound.stop();
+    enemySound.stop();
+    deathSound.stop();
+    gameOverSound.play();
     fill(0);
     textSize(30);
     text("Game Over", width / 2, height / 2);
     noLoop();
+}
+
+function playFlagpoleSound() {
+    //this function plays the flagpole sound
+    flagpoleSound.play();
 }
 
 function createPlatforms(x, y, length) {
