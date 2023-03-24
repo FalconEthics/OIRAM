@@ -10,8 +10,6 @@
 // https://ian-albert.com/games/super_mario_bros_maps/mario-2-2.gif
 // https://ian-albert.com/games/super_mario_bros_maps/mario-4-4.gif
 
-//TODO: complete the game functionality
-//TODO: destructure the code
 //TODO: add sounds
 //TODO: fix the screen size
 //TODO: add a score board
@@ -52,23 +50,36 @@
 var gameChar_x;
 var gameChar_y;
 var floorPos_y;
+
 var isLeft;
 var isRight;
 var isFalling;
 var isPlummeting;
+
+var jumpHeight;
+var jumpSpeed;
+
 var collectable;
+var superCollectable;
+
 var canyon;
 var trees_x;
 var clouds;
 var mountain;
+
 var cameraPosX;
-var game_score;
+
 var flagpole;
 var lives;
-var jumpSound;
 var platforms;
 var enemies;
+var game_score;
+let superJump;
 
+var jumpSound;
+
+
+//loading assets
 function preload() {
     soundFormats('mp3', 'wav');
 
@@ -78,18 +89,92 @@ function preload() {
 }
 
 
+//setup code
 function setup() {
     createCanvas(1024, 576);
     floorPos_y = (height * 3) / 4;
     //lives
     lives = 3;
 
+    //this function resets the game
     //start game
     startGame();
 
 }
 
+function startGame() {
 
+    //initialise the variables
+    gameChar_x = (width / 2) - 300;
+    gameChar_y = floorPos_y;
+    isLeft = false;
+    isRight = false;
+    isFalling = false;
+    isPlummeting = false;
+    jumpSpeed = 3.5;
+    jumpHeight = 120;
+
+    //change the below values to change the collectable items spawn position
+    collectables = [
+        { x_pos: 420, y_pos: floorPos_y, size: 50, isFound: false },
+        { x_pos: 660, y_pos: floorPos_y - 100, size: 50, isFound: false },
+
+    ];
+
+    //change the below values to change the canyon spawn position
+    superCollectables = [
+        { x_pos: 820, y_pos: floorPos_y, size: 50, isFound: false },
+
+    ];
+
+    //change the below values to change the canyon spawn position
+    canyons = [
+        { x_pos: 320, width: 70 },
+
+    ];
+
+    //platforms the character can stand on
+    platforms = [];
+    platforms.push(createPlatforms(500, floorPos_y - 100, 200));
+
+    //change the below values to change the tree spawn position
+    trees_x = [60, 260, 500, 630, 700, 900, 1000];
+    treePos_y = floorPos_y - 144;
+
+    //change the below values to change the mountain spawn position
+    mountain = [
+        { x_pos: -80, y_pos: 400 },
+        { x_pos: 200, y_pos: 400 },
+        { x_pos: 600, y_pos: 400 },
+        { x_pos: 1000, y_pos: 400 },
+    ];
+
+    //change the below values to change the cloud spawn position
+    clouds = [
+        { x_pos: 150, y_pos: 150, size: 50 },
+        { x_pos: 400, y_pos: 100, size: 50 },
+        { x_pos: 600, y_pos: 200, size: 50 },
+        { x_pos: 890, y_pos: 150, size: 50 },
+    ];
+
+    cameraPosX = 0;
+
+    //score counter
+    game_score = 0;
+
+    //super Score counter
+    superJump = "Inactive";
+
+    //flagpole
+    flagpole = { isReached: false, x_pos: 1000 };
+
+    //enemies
+    enemies = [];
+    enemies.push(new Enemy(0, floorPos_y - 5, 100));
+
+}
+
+//draw frames
 function draw() {
     ///////////DRAWING CODE//////////
 
@@ -150,6 +235,14 @@ function draw() {
         if (collectables[i].isFound == false) {
             checkCollectable(collectables[i]);
             drawCollectable(collectables[i]);
+        }
+    }
+
+    //super collectable item
+    for (var i = 0; i < superCollectables.length; i++) {
+        if (superCollectables[i].isFound == false) {
+            checkSuperCollectable(superCollectables[i]);
+            drawSuperCollectable(superCollectables[i]);
         }
     }
 
@@ -272,7 +365,7 @@ function draw() {
             }
         }
     }
-    
+
 
     //the camera stops
     pop();
@@ -282,10 +375,12 @@ function draw() {
     if (isLeft == true && isPlummeting == false) {
         gameChar_x -= 4;
     }
+
     //make the character move right
     if (isRight == true && isPlummeting == false) {
         gameChar_x += 4;
     }
+
     //make the character jump
     if (gameChar_y < floorPos_y && isPlummeting == false) {
         var isContact = false;
@@ -297,7 +392,7 @@ function draw() {
             }
         }
         if (isContact == false) {
-            gameChar_y += 3.5;
+            gameChar_y += jumpSpeed;
             isFalling = true;
         }
     } else {
@@ -309,14 +404,21 @@ function draw() {
     textSize(20);
     text("Score: " + game_score, 20, 20);
 
+    //superJump
+    fill(255);
+    textSize(20);
+    text("Super Jump: " + superJump, 20, 70);
+
     //draw lives
     drawLives();
 
 }
 
 function keyPressed() {
+
     // if statements to control the animation of the character when
     // keys are pressed.
+
     // A to turn left
     if ((keyCode == 65 || key == 'a' || keyCode == 37) && isPlummeting == false) {
         isLeft = true;
@@ -332,13 +434,15 @@ function keyPressed() {
     // W to jump
     if ((keyCode == 87 || key == 'w' || keyCode == 38) && isFalling == false && isPlummeting == false) {
         jumpSound.play();
-        gameChar_y -= 120;
+        gameChar_y -= jumpHeight;
         console.log("character is jumping");
     }
 }
 
 function keyReleased() {
+
     // if statements to control the animation of the character when
+
     // keys are released.
     // to stop moving left
     if (keyCode == 65 || key == 'a' || keyCode == 37) {
@@ -352,6 +456,7 @@ function keyReleased() {
 }
 
 function drawMountains() {
+
     //this function draws the mountains
     for (var i = 0; i < mountain.length; i++) {
         fill(100, 49, 4);
@@ -395,6 +500,7 @@ function drawMountains() {
 }
 
 function drawClouds() {
+
     //this function draws the clouds
     for (var i = 0; i < clouds.length; i++) {
         fill(255);
@@ -426,6 +532,7 @@ function drawClouds() {
 }
 
 function drawTrees() {
+
     //this function draws the trees
     for (var i = 0; i < trees_x.length; i++) {
         fill(0, 100 + [i] * 10, 0);
@@ -451,6 +558,7 @@ function drawTrees() {
 }
 
 function checkCollectable(t_collectable) {
+    
     //this function checks if the character has reached the collectable item
     if (
         dist(
@@ -494,6 +602,59 @@ function drawCollectable(t_collectable) {
         strokeWeight(0);
     }
 }
+
+function checkSuperCollectable(t_superCollectable) {
+    //this function checks if the character has reached the super collectable item
+    if (
+        dist(
+            gameChar_x,
+            gameChar_y,
+            t_superCollectable.x_pos,
+            t_superCollectable.y_pos
+        ) < 25
+    ) {
+        t_superCollectable.isFound = true;
+        jumpHeight = 175;
+        jumpSpeed = 2.9;
+        superJump = "Active";
+        setTimeout(function () {
+            jumpHeight = 120;
+            jumpSpeed = 3.5;
+            superJump = "Inactive";
+        }, 4500);
+        console.log("superCollectable item found");
+    }
+}
+
+function drawSuperCollectable(t_superCollectable) {
+    //this function draws the super collectable items
+    if (t_superCollectable.isFound == false) {
+        fill(255, 010, 0);
+        ellipse(
+            t_superCollectable.x_pos,
+            t_superCollectable.y_pos - 23,
+            t_superCollectable.size - 20,
+            t_superCollectable.size - 20
+        );
+        noFill();
+        stroke(0);
+        strokeWeight(2);
+        ellipse(
+            t_superCollectable.x_pos,
+            t_superCollectable.y_pos - 23,
+            t_superCollectable.size - 30,
+            t_superCollectable.size - 20
+        );
+        ellipse(
+            t_superCollectable.x_pos,
+            t_superCollectable.y_pos - 23,
+            t_superCollectable.size - 41,
+            t_superCollectable.size - 20
+        );
+        strokeWeight(0);
+    }
+}
+
 
 function checkCanyon(t_canyon) {
     //this function checks if the character has reached the canyon
@@ -581,57 +742,6 @@ function drawLives() {
     noStroke();
     textSize(20);
     text("Lives: " + lives, 20, 45);
-}
-
-function startGame() {
-    //this function resets the game
-    //initialise the variables
-    gameChar_x = (width / 2) - 300;
-    gameChar_y = floorPos_y;
-    isLeft = false;
-    isRight = false;
-    isFalling = false;
-    isPlummeting = false;
-    //change the below values to change the collectable items spawn position
-    collectables = [
-        { x_pos: 420, y_pos: floorPos_y, size: 50, isFound: false },
-        { x_pos: 660, y_pos: floorPos_y - 100, size: 50, isFound: false },
-
-    ];
-    //change the below values to change the canyon spawn position
-    canyons = [
-        { x_pos: 320, width: 70 },
-        
-    ];
-    //platforms the character can stand on
-    platforms = [];
-    platforms.push(createPlatforms(500, floorPos_y - 100, 200));
-    //change the below values to change the tree spawn position
-    trees_x = [60, 260, 500, 630, 700, 900, 1000];
-    treePos_y = floorPos_y - 144;
-    //change the below values to change the mountain spawn position
-    mountain = [
-        { x_pos: -80, y_pos: 400 },
-        { x_pos: 200, y_pos: 400 },
-        { x_pos: 600, y_pos: 400 },
-        { x_pos: 1000, y_pos: 400 },
-    ];
-    //change the below values to change the cloud spawn position
-    clouds = [
-        { x_pos: 150, y_pos: 150, size: 50 },
-        { x_pos: 400, y_pos: 100, size: 50 },
-        { x_pos: 600, y_pos: 200, size: 50 },
-        { x_pos: 890, y_pos: 150, size: 50 },
-    ];
-    cameraPosX = 0;
-    //score counter
-    game_score = 0;
-    //flagpole
-    flagpole = { isReached: false, x_pos: 1000 };
-    //enemies
-    enemies = [];
-    enemies.push(new Enemy(0, floorPos_y -5, 100));
-
 }
 
 function gameWon() {
