@@ -211,29 +211,87 @@ function startGame() {
 
     //change the below values to change the collectable items spawn position
     collectables = [
-        { x_pos: 420, y_pos: floorPos_y, size: 30, isFound: false },
-        { x_pos: 660, y_pos: floorPos_y - 100, size: 30, isFound: false },
-
-    ];
+        { x_pos: 500, y_pos: floorPos_y - 100, size: 30, isFound: false },
+        { x_pos: 720, y_pos: floorPos_y - 170, size: 30, isFound: false },
+        { x_pos: 1100, y_pos: floorPos_y, size: 30, isFound: false },
+        { x_pos: 1620, y_pos: floorPos_y - 100, size: 30, isFound: false },
+        { x_pos: 1920, y_pos: floorPos_y, size: 30, isFound: false },
+        { x_pos: 2400, y_pos: floorPos_y, size: 30, isFound: false },
+        { x_pos: 3200, y_pos: floorPos_y, size: 30, isFound: false },
+        { x_pos: 3320, y_pos: floorPos_y, size: 30, isFound: false },
+        { x_pos: 4170, y_pos: floorPos_y - 120, size: 30, isFound: false },
+        { x_pos: 5290, y_pos: floorPos_y - 130, size: 30, isFound: false },
+        { x_pos: 5800, y_pos: floorPos_y, size: 30, isFound: false },
+    ]
 
     //change the below values to change the canyon spawn position
     superCollectables = [
-        { x_pos: 820, y_pos: floorPos_y, size: 50, isFound: false },
+        { x_pos: 920, y_pos: floorPos_y - 100, size: 50, isFound: false },
+        { x_pos: 3290, y_pos: floorPos_y - 155, size: 50, isFound: false },
+        { x_pos: 3945, y_pos: floorPos_y - 5, size: 50, isFound: false },
+        { x_pos: 6350, y_pos: floorPos_y - 145, size: 50, isFound: false },
 
     ];
 
     //change the below values to change the canyon spawn position
     canyons = [
         { x_pos: -100, width: 100, type: 1 },
-        { x_pos: 320, width: 70, type: 1 },
         { x_pos: 900, width: 150, type: 2 },
-        { x_pos: 1200, width: 150, type: 1 },
+        { x_pos: 2050, width: 100, type: 1 },
+        { x_pos: 2660, width: 140, type: 1 },
+        { x_pos: 5900, width: 110, type: 1 },
+        { x_pos: 6750, width: 200, type: 1 },
+
+        //river
+        { x_pos: 3760, width: 180, type: 2 },
+        { x_pos: 4000, width: 180, type: 2 },
+        { x_pos: 6160, width: 190, type: 2 },
 
     ];
 
     //platforms the character can stand on
     platforms = [];
-    platforms.push(createPlatforms(470, floorPos_y - 100, 200));
+    platforms.push(createPlatforms(470, floorPos_y - 100, 300));
+    platforms.push(createPlatforms(870, floorPos_y - 100, 130));
+    platforms.push(createPlatforms(1070, floorPos_y - 130, 130));
+    platforms.push(createPlatforms(1270, floorPos_y - 160, 160));
+    platforms.push(createPlatforms(1570, floorPos_y - 110, 160));
+    platforms.push(createPlatforms(2200, floorPos_y - 100, 160));
+    platforms.push(createPlatforms(2440, floorPos_y - 160, 260));
+    platforms.push(createPlatforms(2810, floorPos_y - 160, 230));
+    platforms.push(createPlatforms(3260, floorPos_y - 160, 230));
+    platforms.push(createPlatforms(6260, floorPos_y - 110, 150));
+
+    //stairs
+    platforms.push(createPlatforms(3650, floorPos_y - 20, 100));
+    platforms.push(createPlatforms(3700, floorPos_y - 40, 100));
+    platforms.push(createPlatforms(3750, floorPos_y - 60, 100));
+    platforms.push(createPlatforms(3800, floorPos_y - 80, 100));
+    platforms.push(createPlatforms(3850, floorPos_y - 100, 100));
+    platforms.push(createPlatforms(3900, floorPos_y - 120, 100));
+
+    platforms.push(createPlatforms(4130, floorPos_y - 120, 100));
+    platforms.push(createPlatforms(4130 + 50, floorPos_y - 100, 100));
+    platforms.push(createPlatforms(4130 + 100, floorPos_y - 80, 100));
+    platforms.push(createPlatforms(4130 + 150, floorPos_y - 60, 100));
+    platforms.push(createPlatforms(4130 + 200, floorPos_y - 40, 100));
+    platforms.push(createPlatforms(4130 + 250, floorPos_y - 20, 100));
+
+    //stairs 2
+    platforms.push(createPlatforms(4880, floorPos_y - 20, 100));
+    platforms.push(createPlatforms(4880 + 50, floorPos_y - 40, 100));
+    platforms.push(createPlatforms(4880 + 100, floorPos_y - 60, 100));
+    platforms.push(createPlatforms(4880 + 150, floorPos_y - 80, 100));
+    platforms.push(createPlatforms(4880 + 200, floorPos_y - 100, 100));
+    platforms.push(createPlatforms(4880 + 250, floorPos_y - 120, 100));
+
+    platforms.push(createPlatforms(4950 + 400, floorPos_y - 120, 100));
+    platforms.push(createPlatforms(4950 + 450, floorPos_y - 100, 100));
+    platforms.push(createPlatforms(4950 + 500, floorPos_y - 80, 100));
+    platforms.push(createPlatforms(4950 + 550, floorPos_y - 60, 100));
+    platforms.push(createPlatforms(4950 + 600, floorPos_y - 40, 100));
+    platforms.push(createPlatforms(4950 + 650, floorPos_y - 20, 100));
+
 
     //change the below values to change the tree spawn position
     trees_x = [-200, 70, 330, 600, 920, 1300, 2100, 2600, 2900, 3150];
@@ -258,12 +316,20 @@ function startGame() {
     superJump = "Inactive";
 
     //flagpole
-    flagpole = { isReached: false, x_pos: 3000 };
+    flagpole = { isReached: false, x_pos: 7000 };
 
     //enemies
     enemies = [];
     enemies.push(new Enemy(0, floorPos_y - 5, 100, 1));
-    enemies.push(new Enemy(600, floorPos_y - 5, 100, 2));
+    enemies.push(new Enemy(400, floorPos_y - 5, 200, 2));
+    enemies.push(new Enemy(1150, floorPos_y - 5, 200, 2));
+    enemies.push(new Enemy(1500, floorPos_y - 5, 100, 1));
+    enemies.push(new Enemy(2820, floorPos_y - 5, 200, 2));
+    enemies.push(new Enemy(4610, floorPos_y - 5, 50, 1));
+    enemies.push(new Enemy(5200, floorPos_y - 5, 70, 2));
+    enemies.push(new Enemy(5200 + 75, floorPos_y - 5, 70, 2));
+    enemies.push(new Enemy(6400, floorPos_y - 5, 70, 2));
+    enemies.push(new Enemy(6550, floorPos_y - 5, 50, 1));
 
 }
 
@@ -742,7 +808,7 @@ function createPlatforms(x, y, length) {
         y: y,
         length: length,
         draw: function () {
-            image(platform, this.x + 16, this.y, this.length, 20);
+            image(platform, this.x * 1.05, this.y, this.length * 1.05, 20);
         },
         checkContact: function (gc_x, gc_y) {
             if (gc_x > this.x && gc_x < this.x + this.length) {
