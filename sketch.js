@@ -259,8 +259,8 @@ function startGame() {
     platforms.push(createPlatforms(2200, floorPos_y - 100, 160));
     platforms.push(createPlatforms(2440, floorPos_y - 160, 260));
     platforms.push(createPlatforms(2810, floorPos_y - 160, 230));
-    platforms.push(createPlatforms(3260, floorPos_y - 160, 230));
-    platforms.push(createPlatforms(6260, floorPos_y - 110, 150));
+    platforms.push(createPlatforms(3160, floorPos_y - 160, 230));
+    platforms.push(createPlatforms(6150, floorPos_y - 100, 150));
 
     //stairs
     platforms.push(createPlatforms(3650, floorPos_y - 20, 100));
@@ -290,7 +290,7 @@ function startGame() {
     platforms.push(createPlatforms(4950 + 500, floorPos_y - 80, 100));
     platforms.push(createPlatforms(4950 + 550, floorPos_y - 60, 100));
     platforms.push(createPlatforms(4950 + 600, floorPos_y - 40, 100));
-    platforms.push(createPlatforms(4950 + 650, floorPos_y - 20, 100));
+    platforms.push(createPlatforms(5000 + 650, floorPos_y - 20, 100));
 
 
     //change the below values to change the tree spawn position
@@ -321,7 +321,7 @@ function startGame() {
     //enemies
     enemies = [];
     enemies.push(new Enemy(0, floorPos_y - 5, 100, 1));
-    enemies.push(new Enemy(400, floorPos_y - 5, 200, 2));
+    enemies.push(new Enemy(460, floorPos_y - 5, 200, 2));
     enemies.push(new Enemy(1150, floorPos_y - 5, 200, 2));
     enemies.push(new Enemy(1500, floorPos_y - 5, 100, 1));
     enemies.push(new Enemy(2820, floorPos_y - 5, 200, 2));
@@ -808,10 +808,10 @@ function createPlatforms(x, y, length) {
         y: y,
         length: length,
         draw: function () {
-            image(platform, this.x * 1.05, this.y, this.length * 1.05, 20);
+            image(platform, this.x, this.y, this.length, 20);
         },
         checkContact: function (gc_x, gc_y) {
-            if (gc_x > this.x && gc_x < this.x + this.length) {
+            if (gc_x > (this.x - 35) && gc_x < this.x + this.length + 5 ) {
                 var d = this.y - gc_y;
                 if (d >= 0 && d < 5) {
                     return true;
