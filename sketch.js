@@ -1,51 +1,5 @@
 //Game project final submission
 
-//https://www.youtube.com/watch?v=rLl9XBg7wSs
-//https://github.com/linuk/Mario.Run
-
-//https://ian-albert.com/games/super_mario_bros_maps/mario-1-1.gif
-// https://ian-albert.com/games/super_mario_bros_maps/mario-1-2.gif
-// https://ian-albert.com/games/super_mario_bros_maps/mario-1-3.gif
-// https://ian-albert.com/games/super_mario_bros_maps/mario-1-4.gif
-// https://ian-albert.com/games/super_mario_bros_maps/mario-2-2.gif
-// https://ian-albert.com/games/super_mario_bros_maps/mario-4-4.gif
-
-//TODO: add sounds
-//fix the screen size
-//TODO: add a score board
-//TODO: add auto levels
-//TODO: add more enemies
-//TODO: add level wise sounds
-//TODO: add more collectable items
-//TODO: add more platforms
-//TODO: add more canyons
-//TODO: add background (bioshock infinite)
-//TODO: edit HD textures
-//TODO: edit character animations
-//TODO: add super power collectable items
-//TODO: add barriers
-//TODO: add weather effects
-//TODO: add trophy and a palace at the end of the game
-//TODO: add a story
-//TODO: add a boss
-//TODO: make a start game screen
-//TODO: make a game over screen
-//TODO: make a game won screen
-//TODO: make a game restart button
-//TODO: make a game pause button
-//TODO: highest score counter
-//add css
-//add a game ui
-//TODO: add underground levels
-//TODO: add air levels
-//TODO: add water levels
-//TODO: add desert & forest levels
-//TODO: add snow levels
-//TODO: add ending
-//TODO: add opening trailer
-//TODO: add a game screenshot
-//TODO: deploy the game
-
 // Global variables
 var gameChar_x;
 var gameChar_y;
@@ -110,7 +64,7 @@ var platform;
 var palace;
 
 var frontfacing;
-var fontfacingjump;
+var frontfacingjump;
 var rightfacing;
 var rightfacing2;
 var rightfacingjump;
@@ -121,11 +75,14 @@ var characteranimation;
 
 var gameWonImg;
 var gameOverImg;
+var startKey;
 
 //loading assets
 function preload() {
 
     //load your images here
+    //start key
+    startKey = loadImage('assets/startkey.png');
     //sky
     sky = loadImage('assets/sky.jpg');
     //floor
@@ -301,7 +258,7 @@ function startGame() {
     superJump = "Inactive";
 
     //flagpole
-    flagpole = { isReached: false, x_pos: 1400 };
+    flagpole = { isReached: false, x_pos: 3000 };
 
     //enemies
     enemies = [];
@@ -312,6 +269,7 @@ function startGame() {
 
 //this function plays the background music
 function playBgm() {
+
     backgroundSound.play();
     backgroundSound.loop();
 }
@@ -452,22 +410,22 @@ function draw() {
     }
 
     //make the character jump
-    if (gameChar_y < floorPos_y && isPlummeting == false) {
-        var isContact = false;
-        for (var i = 0; i < platforms.length; i++) {
-            if (platforms[i].checkContact(gameChar_x, gameChar_y) == true) {
-                isContact = true;
-                isFalling = false;
-                break;
-            }
-        }
-        if (isContact == false) {
-            gameChar_y += jumpSpeed;
-            isFalling = true;
-        }
-    } else {
-        isFalling = false;
-    }
+    // if (gameChar_y < floorPos_y && isPlummeting == false) {
+    //     var isContact = false;
+    //     for (var i = 0; i < platforms.length; i++) {
+    //         if (platforms[i].checkContact(gameChar_x, gameChar_y) == true) {
+    //             isContact = true;
+    //             isFalling = false;
+    //             break;
+    //         }
+    //     }
+    //     if (isContact == false) {
+    //         gameChar_y += jumpSpeed;
+    //         isFalling = true;
+    //     }
+    // } else {
+    //     isFalling = false;
+    // }
 
     //draw lives
     drawLives();
@@ -475,11 +433,13 @@ function draw() {
     //score
     fill(255);
     textSize(18);
+    textFont('Georgia');
     text(" Score: " + game_score, 69, 67);
 
     //superJump
     fill(255);
     textSize(14);
+    textFont('Georgia');
     text("Super Jump: " + superJump, 43, 85);
 
     //game over
@@ -496,6 +456,15 @@ function draw() {
         }, 500);
     }
 
+    //show keybinds
+    if (gameChar_x == (width / 2) - 300 &&
+        gameChar_y == floorPos_y) {
+        image(startKey, 0, 0);
+        fill(255);
+        textSize(25);
+        textFont('Georgia');
+        text("Press to start the game", 395, 410);
+    }
 
 }
 
@@ -723,6 +692,7 @@ function drawLives() {
     fill(255);
     noStroke();
     textSize(18);
+    textFont('Georgia');
     text("Lives: " + lives, 75, 45);
 }
 
@@ -730,16 +700,17 @@ function gameWon() {
     backgroundSound.stop();
     enemySound.stop();
     deathSound.stop();
-    if(!winSound.isPlaying()){
+    if (!winSound.isPlaying()) {
         winSound.play();
     }
-    //this function checks if the character has won the game
     image(gameWonImg, 200, 100);
     fill(255);
     noStroke();
     textSize(18);
-    text("Press Space to Restart", 400, 500);
+    textFont('Georgia');
+    text("Press Space to Restart", 440, 500);
     noLoop();
+    //this function checks if the character has won the game
 }
 
 function gameOver() {
@@ -747,7 +718,9 @@ function gameOver() {
     backgroundSound.stop();
     enemySound.stop();
     deathSound.stop();
-    gameOverSound.play();
+    if (!gameOverSound.isPlaying()) {
+        gameOverSound.play();
+    }
     image(gameOverImg, 200, 0);
     fill(255);
     noStroke();

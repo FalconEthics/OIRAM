@@ -43,6 +43,7 @@ Welcome to OIRAM, the game that's not a Mario clone xD!
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
+    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -62,10 +63,36 @@ So what are you waiting for? Give OIRAM a try and see if you have what it takes 
 
 ### Built With
 
-It is built using p5.js, a JavaScript library for creative coding.I've put in a ton of effort to create a seamless gaming experience, from the charming graphics to the catchy soundtrack. And don't forget about the hilarious sound effects - you'll be chuckling as you jump and run your way through the levels.
+It is built using p5.js, a JavaScript library for creative coding.I've put in a ton of effort to create a seamless gaming experience, from the charming graphics to the catchy soundtrack. And don't forget about the hilarious sound effects - you'll be chuckling as you jump and run your way through the levels. While it's true that there are many better ways to create this kind of experience but as it was actually a college project i had to use the given tech stack.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- ROADMAP -->
+## Roadmap
+
+I did this projectt recently with p5.js and vanilla javascript as a final project fo ITP1 cource of my university. Because of time constraints i didn't get able to get the whole game completed, so i only the parts i was asked by my uni. If you like the concept and would like to finish this project then here's the roadmap that i will be following and will be working on to complete this project in near future (feel free to contribute to the project to help me complete the roadmap):
+
+- [x] Base Game
+- [x] HD Textures
+- [x] Sprite Animations
+- [x] Start and End Screen UI
+- [ ] add a story
+- [ ] add a boss enemy
+- [ ] add barriers
+- [ ] add score leader-board
+- [ ] make a game pause button
+- [ ] add levels & more maps
+    - [ ] add underground levels
+    - [ ] add air & on water levels
+    - [x] add forest levels
+    - [ ] add spike canyons
+    - [ ] add super spells
+    - [ ] add enemy mushrooms
+    - [ ] add ending - save the princess
+
+See the [open issues](https://github.com/FalconEthics/keeper-app/issuess) for a full list of proposed features (and known issues).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -89,10 +116,17 @@ git commit -m Add some AmazingFeature
 git push origin feature/AmazingFeature
 ```
 5. Open a Pull Request
-
+   
+6. For level designing guidance :
+<ul>
+<li><a href="https://ian-albert.com/games/super_mario_bros_maps/mario-1-1.gif">Level 1</a></li>
+<li><a href="https://ian-albert.com/games/super_mario_bros_maps/mario-1-2.gif">Level 2</a></li>
+<li><a href="https://ian-albert.com/games/super_mario_bros_maps/mario-1-3.gif">Level 3</a></li>
+<li><a href="https://ian-albert.com/games/super_mario_bros_maps/mario-1-4.gif">Level 4</a></li>
+<li><a href="https://ian-albert.com/games/super_mario_bros_maps/mario-2-2.gif">Level 5</a></li>
+<li><a href="https://ian-albert.com/games/super_mario_bros_maps/mario-4-4.gif">Level 6</a></li>
+</ul>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- LICENSE -->
 ## License
