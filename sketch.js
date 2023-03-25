@@ -410,22 +410,22 @@ function draw() {
     }
 
     //make the character jump
-    // if (gameChar_y < floorPos_y && isPlummeting == false) {
-    //     var isContact = false;
-    //     for (var i = 0; i < platforms.length; i++) {
-    //         if (platforms[i].checkContact(gameChar_x, gameChar_y) == true) {
-    //             isContact = true;
-    //             isFalling = false;
-    //             break;
-    //         }
-    //     }
-    //     if (isContact == false) {
-    //         gameChar_y += jumpSpeed;
-    //         isFalling = true;
-    //     }
-    // } else {
-    //     isFalling = false;
-    // }
+    if (gameChar_y < floorPos_y && isPlummeting == false) {
+        var isContact = false;
+        for (var i = 0; i < platforms.length; i++) {
+            if (platforms[i].checkContact(gameChar_x, gameChar_y) == true) {
+                isContact = true;
+                isFalling = false;
+                break;
+            }
+        }
+        if (isContact == false) {
+            gameChar_y += jumpSpeed;
+            isFalling = true;
+        }
+    } else {
+        isFalling = false;
+    }
 
     //draw lives
     drawLives();
