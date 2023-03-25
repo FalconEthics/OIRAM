@@ -533,6 +533,11 @@ function keyPressed() {
         gameChar_y -= jumpHeight;
         console.log("character is jumping");
     }
+
+    //spacebar to restart the game
+    if (keyCode == 32) {
+        window.location.reload()
+    }
 }
 
 function keyReleased() {
@@ -723,9 +728,17 @@ function drawLives() {
 
 function gameWon() {
     backgroundSound.stop();
-    winSound.play();
+    enemySound.stop();
+    deathSound.stop();
+    if(!winSound.isPlaying()){
+        winSound.play();
+    }
     //this function checks if the character has won the game
     image(gameWonImg, 200, 100);
+    fill(255);
+    noStroke();
+    textSize(18);
+    text("Press Space to Restart", 400, 500);
     noLoop();
 }
 
@@ -736,6 +749,12 @@ function gameOver() {
     deathSound.stop();
     gameOverSound.play();
     image(gameOverImg, 200, 0);
+    fill(255);
+    noStroke();
+    textSize(18);
+    textFont('Georgia');
+    text("Press Space to Restart", 400, 500);
+
     noLoop();
 }
 
