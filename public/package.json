@@ -1,0 +1,14 @@
+{
+  "name": "oiram",
+  "version": "1.0.0",
+  "description": "<a name=\"readme-top\"></a> [![Contributors][contributors-shield]][contributors-url] [![Forks][forks-shield]][forks-url] [![Stargazers][stars-shield]][stars-url] [![Issues][issues-shield]][issues-url] [![GNU License][license-shield]][license-url] [![LinkedIn][linkedin-shield]][linkedin-url]",
+  "main": "p5.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "falconethics",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
