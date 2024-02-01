@@ -140,15 +140,15 @@ Distributed under the GNU License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
+
 <ul>
 <li><a href="https://www.linkedin.com/in/soumik-das-profile/"> LinkedIn Profile</a></li>
-<li><a href="https://www.soumik-das.com"> Portfolio Site</a></li>
+<li><a href="https://mrsoumik-das.com"> Portfolio Site</a></li>
 <li><a href="https://twitter.com/Mr_Soumik_Das"> Twitter Handle</a></li>
 </ul>
 
 ~ wanna checkout my other projects: [https://github.com/FalconEthics](https://github.com/FalconEthics)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
