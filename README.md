@@ -149,7 +149,7 @@ Distributed under the GNU License. See `LICENSE.txt` for more information.
 
 ~ wanna checkout my other projects: [https://github.com/FalconEthics](https://github.com/FalconEthics)
 
-
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 ## Acknowledgments
