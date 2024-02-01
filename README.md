@@ -143,7 +143,7 @@ Distributed under the GNU License. See `LICENSE.txt` for more information.
 
 <ul>
 <li><a href="https://www.linkedin.com/in/soumik-das-profile/"> LinkedIn Profile</a></li>
-<li><a href="https://mrsoumik-das.com"> Portfolio Site</a></li>
+<li><a href="https://mrsoumikdas.com"> Portfolio Site</a></li>
 <li><a href="https://twitter.com/Mr_Soumik_Das"> Twitter Handle</a></li>
 </ul>
 
