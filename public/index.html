@@ -18,6 +18,8 @@
         background-image: url("./assets/bg.jpg");
         background-size: cover;
         overflow: hidden;
+        margin: 0;
+        font-family: 'Courier New', monospace;
       }
       @keyframes fadeIn {
         0% {
@@ -64,9 +66,276 @@
           transform: translateY(0);
         }
       }
+
+      /* Mobile Alert Styles */
+      #mobile-alert {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        color: white;
+        font-size: 18px;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      #mobile-alert .alert-content {
+        text-align: center;
+        max-width: 400px;
+        background: #2c3e50;
+        padding: 30px;
+        border-radius: 10px;
+        border: 2px solid #e74c3c;
+      }
+
+      #mobile-alert h2 {
+        color: #e74c3c;
+        margin-top: 0;
+        font-size: 24px;
+      }
+
+      #mobile-alert button {
+        background: #e74c3c;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px;
+      }
+
+      #mobile-alert button:hover {
+        background: #c0392b;
+      }
+
+      /* Floating About Button */
+      #about-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background: #3498db;
+        border: none;
+        border-radius: 50%;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        transition: all 0.3s ease;
+      }
+
+      #about-button:hover {
+        background: #2980b9;
+        transform: scale(1.1);
+      }
+
+      /* About Modal Styles */
+      #about-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+      }
+
+      #about-modal .modal-content {
+        background: #2c3e50;
+        color: white;
+        padding: 30px;
+        border-radius: 10px;
+        max-width: 600px;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+        border: 2px solid #3498db;
+      }
+
+      #about-modal h2 {
+        color: #3498db;
+        margin-top: 0;
+        font-size: 28px;
+        text-align: center;
+      }
+
+      #about-modal h3 {
+        color: #e67e22;
+        margin-top: 25px;
+        font-size: 20px;
+      }
+
+      #about-modal .close {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 30px;
+        cursor: pointer;
+        color: #e74c3c;
+        background: none;
+        border: none;
+      }
+
+      #about-modal .close:hover {
+        color: #c0392b;
+      }
+
+      #about-modal .social-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      #about-modal .social-links a {
+        color: #3498db;
+        text-decoration: none;
+        padding: 8px 12px;
+        border: 1px solid #3498db;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+      }
+
+      #about-modal .social-links a:hover {
+        background: #3498db;
+        color: white;
+      }
+
+      #about-modal .copyright {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #34495e;
+        font-size: 14px;
+        color: #bdc3c7;
+      }
+
+      #about-modal .warning {
+        background: #e74c3c;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 20px 0;
+        font-weight: bold;
+      }
+
+      @media (max-width: 768px) {
+        #about-modal .modal-content {
+          margin: 20px;
+          padding: 20px;
+          max-width: calc(100% - 40px);
+        }
+      }
     </style>
   </head>
   <body>
     <h1>OIRAM REPUS</h1>
+
+    <!-- Mobile Alert -->
+    <div id="mobile-alert">
+      <div class="alert-content">
+        <h2>⚠️ Mobile Device Detected</h2>
+        <p>This game is not optimized for mobile devices and requires a keyboard to play properly.</p>
+        <p>For the best experience, please use a desktop or laptop computer.</p>
+        <button onclick="closeMobileAlert()">Continue Anyway</button>
+      </div>
+    </div>
+
+    <!-- About Button -->
+    <button id="about-button" onclick="openAboutModal()" title="About OIRAM">ℹ️</button>
+
+    <!-- About Modal -->
+    <div id="about-modal">
+      <div class="modal-content">
+        <button class="close" onclick="closeAboutModal()">&times;</button>
+        
+        <h2>About OIRAM REPUS</h2>
+        
+        <div class="warning">
+          ⚠️ This is a project application, not a production app. Please do not share any personal information while using this game.
+        </div>
+
+        <p>Welcome to OIRAM, the game that's not a Mario clone! In this wacky adventure, you'll play as OIRAM, a mustached hero on a mission to save the princess from the clutches of an evil mushroom king.</p>
+
+        <p>This game was created as a university project using p5.js and vanilla JavaScript. It features charming graphics, catchy soundtrack, and hilarious sound effects that will keep you chuckling as you jump and run through the levels.</p>
+
+        <h3>🎮 How to Play</h3>
+        <p><strong>Requirements:</strong> Keyboard is required to play this game.</p>
+        <ul style="text-align: left;">
+          <li><strong>Arrow Keys:</strong> Move left/right</li>
+          <li><strong>Space Bar:</strong> Jump</li>
+          <li><strong>Collect coins</strong> and avoid enemies</li>
+          <li><strong>Reach the flagpole</strong> to complete the level</li>
+        </ul>
+
+        <h3>🛠️ Built With</h3>
+        <p>p5.js - A JavaScript library for creative coding</p>
+
+        <h3>🔗 Connect with the Developer</h3>
+        <div class="social-links">
+          <a href="https://mrsoumikdas.com" target="_blank">Portfolio</a>
+          <a href="https://www.linkedin.com/in/soumik-das-profile/" target="_blank">LinkedIn</a>
+          <a href="https://twitter.com/Mr_Soumik_Das" target="_blank">Twitter</a>
+          <a href="https://github.com/FalconEthics" target="_blank">GitHub</a>
+        </div>
+
+        <h3>📝 Project Notes</h3>
+        <p>This was initially created as a final project for ITP1 course during my Bachelor's in CSE from the University of London. Due to time constraints, only core features were completed as requested by the university.</p>
+
+        <div class="copyright">
+          Copyright © 2023 - Soumik Das. All Rights Reserved.
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Mobile Detection
+      function isMobileDevice() {
+        return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+      }
+
+      // Show mobile alert if on mobile device
+      if (isMobileDevice()) {
+        document.getElementById('mobile-alert').style.display = 'flex';
+      }
+
+      function closeMobileAlert() {
+        document.getElementById('mobile-alert').style.display = 'none';
+      }
+
+      function openAboutModal() {
+        document.getElementById('about-modal').style.display = 'flex';
+      }
+
+      function closeAboutModal() {
+        document.getElementById('about-modal').style.display = 'none';
+      }
+
+      // Close modal when clicking outside of it
+      document.getElementById('about-modal').addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeAboutModal();
+        }
+      });
+
+      // Close modal with Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeAboutModal();
+        }
+      });
+    </script>
   </body>
 </html>
